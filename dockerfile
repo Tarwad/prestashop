@@ -1,6 +1,6 @@
 FROM php:5.6-apache
 
-MAINTAINER Thomas Nabord <thomas.nabord@prestashop.com
+MAINTAINER Sebastien Libert <sebastien.libert@skynet.be>
 
 ENV PS_VERSION 1.5.6.0
 
@@ -10,17 +10,17 @@ ENV DB_PORT 3306
 ENV DB_NAME prestashop
 ENV DB_USER root
 ENV DB_PASSWD admin
-ENV ADMIN_MAIL demo@prestashop.com
-ENV ADMIN_PASSWD prestashop_demo
-ENV PS_LANGUAGE en
-ENV PS_COUNTRY gb
-ENV PS_INSTALL_AUTO 0
+ENV ADMIN_MAIL sebastien.libert@skynet.be
+ENV ADMIN_PASSWD SEBAINFO
+ENV PS_LANGUAGE fr
+ENV PS_COUNTRY be
+ENV PS_INSTALL_AUTO 1
 ENV PS_DEV_MODE 0
 ENV PS_HOST_MODE 0
 ENV PS_HANDLE_DYNAMIC_DOMAIN 0
 
-ENV PS_FOLDER_ADMIN admin
-ENV PS_FOLDER_INSTALL install
+ENV PS_FOLDER_ADMIN gestion
+ENV PS_FOLDER_INSTALL ps_install
 
 
 # Avoid MySQL questions during installation
