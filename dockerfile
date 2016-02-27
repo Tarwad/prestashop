@@ -4,6 +4,7 @@ MAINTAINER Sebastien Libert <sebastien.libert@skynet.be>
 
 ENV PS_VERSION 1.5.6.0
 
+
 ENV PS_DOMAIN prestashop.local
 ENV DB_SERVER 127.0.0.1
 ENV DB_PORT 3306
