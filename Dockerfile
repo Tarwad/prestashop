@@ -58,6 +58,9 @@ EXPOSE 80 443
 
 CMD ["nginx", "-g", "daemon off;"]
 
+# install PHP fpm
+apt-get install php5-fpm
+
 # Avoid MySQL questions during installation
 
 # RUN echo mysql-server-5.6 mysql-server/root_password password $DB_PASSWD | debconf-set-selections
