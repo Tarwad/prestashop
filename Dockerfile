@@ -64,7 +64,7 @@ RUN apt-get install php5-fpm php5-mysqlnd php5-curl php5-gd php5-intl php-pear p
 
 # install Pureftpd, bind9 et fail2ban :
 RUN apt-get install pure-ftpd-common pure-ftpd-mysql bind9 dnsutils fail2ban nano -y
-
+COPY /configfiles/pure-ftpd-common /etc/default/
 
 
 # Avoid MySQL questions during installation
