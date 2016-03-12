@@ -1,8 +1,17 @@
-FROM php:5.6-apache
+#FROM php:5.6-apache
+FROM debian:jessie
 
 MAINTAINER Sebastien Libert <sebastien.libert@skynet.be>
 
-ENV PS_VERSION 1.5.6.0
+ENV DEBIAN_FRONTEND noninteractive
+
+#ENV PS_VERSION 1.5.6.0
+
+ENV GIT_REPO git@github.com:PrestaShop/PrestaShop.git
+ENV GIT_BRANCH master
+
+
+
 
 ENV PS_DOMAIN prestashop.local
 ENV DB_SERVER 127.0.0.1
@@ -22,44 +31,70 @@ ENV PS_HANDLE_DYNAMIC_DOMAIN 0
 ENV PS_FOLDER_ADMIN gestion
 ENV PS_FOLDER_INSTALL ps_install
 
+#Installation of NGINX
+
+
+MAINTAINER NGINX Docker Maintainers "docker-maint@nginx.com"
+
+ENV NGINX_VERSION 1.9.12-1~jessie
+
+RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62 \
+	&& echo "deb http://nginx.org/packages/mainline/debian/ jessie nginx" >> /etc/apt/sources.list \
+	&& apt-get update \
+	&& apt-get install -y \
+						ca-certificates \
+						nginx=${NGINX_VERSION} \
+						nginx-module-xslt \
+						nginx-module-geoip \
+						nginx-module-image-filter \
+						gettext-base \
+	&& rm -rf /var/lib/apt/lists/*
+
+# forward request and error logs to docker log collector
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+	&& ln -sf /dev/stderr /var/log/nginx/error.log
+
+EXPOSE 80 443
+
+CMD ["nginx", "-g", "daemon off;"]
 
 # Avoid MySQL questions during installation
-ENV DEBIAN_FRONTEND noninteractive
-RUN echo mysql-server-5.6 mysql-server/root_password password $DB_PASSWD | debconf-set-selections
-RUN echo mysql-server-5.6 mysql-server/root_password_again password $DB_PASSWD | debconf-set-selections
 
-RUN apt-get update \
-	&& apt-get install -y libmcrypt-dev \
-		libjpeg62-turbo-dev \
-		libpng12-dev \
-		libfreetype6-dev \
-		libxml2-dev \
-		mysql-client \
-		mysql-server \
-		wget \
-		unzip \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install iconv mcrypt pdo mysql pdo_mysql mbstring soap gd
+# RUN echo mysql-server-5.6 mysql-server/root_password password $DB_PASSWD | debconf-set-selections
+# RUN echo mysql-server-5.6 mysql-server/root_password_again password $DB_PASSWD | debconf-set-selections
+
+# RUN apt-get update \
+# 	&& apt-get install -y libmcrypt-dev \
+# 		libjpeg62-turbo-dev \
+# 		libpng12-dev \
+# 		libfreetype6-dev \
+# 		libxml2-dev \
+# 		mysql-client \
+# 		mysql-server \
+# 		wget \
+# 		unzip \
+#     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+#     && docker-php-ext-install iconv mcrypt pdo mysql pdo_mysql mbstring soap gd
 
 # Get PrestaShop
-ADD https://github.com/PrestaShop/PrestaShop/releases/download/1.6.1.4/prestashop_1.6.1.4.zip /tmp/prestashop.zip
-RUN unzip -q /tmp/prestashop.zip -d /tmp/ && mv /tmp/prestashop/* /var/www/html && rm /tmp/prestashop.zip
-COPY config_files/docker_updt_ps_domains.php /var/www/html/
+# ADD https://github.com/PrestaShop/PrestaShop/releases/download/1.6.1.4/prestashop_1.6.1.4.zip /tmp/prestashop.zip
+# RUN unzip -q /tmp/prestashop.zip -d /tmp/ && mv /tmp/prestashop/* /var/www/html && rm /tmp/prestashop.zip
+# COPY config_files/docker_updt_ps_domains.php /var/www/html/
 
 # Apache configuration
-RUN a2enmod rewrite
-RUN chown www-data:www-data -R /var/www/html/
+# RUN a2enmod rewrite
+# RUN chown www-data:www-data -R /var/www/html/
 
 # PHP configuration
-COPY config_files/php.ini /usr/local/etc/php/
+# COPY config_files/php.ini /usr/local/etc/php/
 
 # MySQL configuration
-RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
-EXPOSE 3306
+# RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
+# EXPOSE 3306
 
-VOLUME /var/www/html/modules
-VOLUME /var/www/html/themes
-VOLUME /var/www/html/override
+# VOLUME /var/www/html/modules
+# VOLUME /var/www/html/themes
+# VOLUME /var/www/html/override
 
-COPY config_files/docker_run.sh /tmp/
-ENTRYPOINT ["/tmp/docker_run.sh"]
+# COPY config_files/docker_run.sh /tmp/
+# ENTRYPOINT ["/tmp/docker_run.sh"]
