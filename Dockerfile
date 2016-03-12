@@ -62,6 +62,11 @@ CMD ["nginx", "-g", "daemon off;"]
 RUN apt-get update && apt-get upgrade -y && apt-get install htop software-properties-common python-software-properties -y
 RUN apt-get install php5-fpm php5-mysqlnd php5-curl php5-gd php5-intl php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-memcached php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl fcgiwrap memcached -y
 
+# install Pureftpd, bind9 et fail2ban :
+RUN apt-get install pure-ftpd-common pure-ftpd-mysql bind9 dnsutils fail2ban -y
+
+
+
 # Avoid MySQL questions during installation
 
 # RUN echo mysql-server-5.6 mysql-server/root_password password $DB_PASSWD | debconf-set-selections
