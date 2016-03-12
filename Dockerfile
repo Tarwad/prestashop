@@ -58,8 +58,9 @@ EXPOSE 80 443
 
 CMD ["nginx", "-g", "daemon off;"]
 
-# install PHP fpm
-apt-get install php5-fpm
+# install hTOP - PHP fpm
+apt-get update && apt-get upgrade -y && apt-get install htop software-properties-common python-software-properties -y
+#apt-get install php5-fpm
 
 # Avoid MySQL questions during installation
 
