@@ -72,6 +72,7 @@ COPY /configfiles/pure-ftpd-common /etc/default/
 #RUN chmod 600 /etc/ssl/private/pure-ftpd.pem
 
 
+
 # Avoid MySQL questions during installation
 
 # RUN echo mysql-server-5.6 mysql-server/root_password password $DB_PASSWD | debconf-set-selections
@@ -91,9 +92,9 @@ COPY /configfiles/pure-ftpd-common /etc/default/
 #     && docker-php-ext-install iconv mcrypt pdo mysql pdo_mysql mbstring soap gd
 
 # Get PrestaShop
-# ADD https://github.com/PrestaShop/PrestaShop/releases/download/1.6.1.4/prestashop_1.6.1.4.zip /tmp/prestashop.zip
-# RUN unzip -q /tmp/prestashop.zip -d /tmp/ && mv /tmp/prestashop/* /var/www/html && rm /tmp/prestashop.zip
-# COPY config_files/docker_updt_ps_domains.php /var/www/html/
+ADD https://github.com/PrestaShop/PrestaShop/releases/download/1.6.1.4/prestashop_1.6.1.4.zip /tmp/prestashop.zip
+RUN unzip -q /tmp/prestashop.zip -d /tmp/ && mv /tmp/prestashop/* /var/www/html && rm /tmp/prestashop.zip
+#COPY config_files/docker_updt_ps_domains.php /var/www/html/
 
 # Apache configuration
 # RUN a2enmod rewrite
