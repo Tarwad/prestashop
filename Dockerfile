@@ -93,7 +93,7 @@ COPY /configfiles/pure-ftpd-common /etc/default/
 
 # Get PrestaShop
 ADD https://github.com/PrestaShop/PrestaShop/releases/download/1.6.1.4/prestashop_1.6.1.4.zip /tmp/prestashop.zip
-RUN unzip -q /tmp/prestashop.zip -d /tmp/ && mv /tmp/prestashop/* /var/www/html && rm /tmp/prestashop.zip
+RUN unzip -q /tmp/prestashop.zip -d /tmp/ && mv /tmp/prestashop/* /usr/share/nginx/html/prestashop && rm /tmp/prestashop.zip
 #COPY config_files/docker_updt_ps_domains.php /var/www/html/
 
 # Apache configuration
