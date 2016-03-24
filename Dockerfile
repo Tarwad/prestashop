@@ -64,7 +64,7 @@ RUN apt-get install php5-fpm php5-mysqlnd php5-curl php5-gd php5-intl php-pear p
 
 # install Pureftpd, bind9, fail2ban, nano :
 RUN apt-get install pure-ftpd-common pure-ftpd-mysql bind9 dnsutils fail2ban nano -y
-COPY /configfiles/pure-ftpd-common /etc/default/
+COPY ./configfiles/pure-ftpd-common /etc/default/
 #RUN echo 1 > /etc/pure-ftpd/conf/TLS
 
 #RUN mkdir -p /etc/ssl/private/
@@ -94,8 +94,8 @@ COPY /configfiles/pure-ftpd-common /etc/default/
 # Get PrestaShop
 ADD https://github.com/PrestaShop/PrestaShop/releases/download/1.6.1.4/prestashop_1.6.1.4.zip /tmp/prestashop.zip
 RUN mkdir /usr/share/nginx/html/prestashop
-RUN unzip -q /tmp/prestashop.zip -d /tmp/ && mv /tmp/prestashop/* /usr/share/nginx/html/prestashop && rm /tmp/prestashop.zip
-COPY configfiles/docker_updt_ps_domains.php /var/www/html/
+RUN unzip -q /tmp/prestashop.zip -d /tmp/ && mv /tmp/prestashop/* /var/www/$PS_DOMAIN && rm /tmp/prestashop.zip
+COPY ./configfiles/docker_updt_ps_domains.php /var/www/$PS_DOMAIN
 
 # Apache configuration
 # RUN a2enmod rewrite
@@ -110,5 +110,5 @@ ADD ./configfiles/yoursite.com.conf /usr/local/conf.d/$PS_DOMAIN.conf
 # VOLUME /var/www/html/themes
 # VOLUME /var/www/html/override
 
-COPY configfiles/docker_run.sh /tmp/
+COPY ./configfiles/docker_run.sh /tmp/
 ENTRYPOINT ["/tmp/docker_run.sh"]
