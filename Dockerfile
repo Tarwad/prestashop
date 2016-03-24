@@ -24,7 +24,7 @@ ENV ADMIN_PASSWD SEBAINFO
 ENV PS_LANGUAGE fr
 ENV PS_COUNTRY be
 ENV PS_INSTALL_AUTO 1
-ENV PS_DEV_MODE 0
+ENV PS_DEV_MODE 1
 ENV PS_HOST_MODE 0
 ENV PS_HANDLE_DYNAMIC_DOMAIN 0
 
@@ -110,5 +110,5 @@ ADD ./configfiles/yoursite.com.conf /usr/local/conf.d/$PS_DOMAIN.conf
 # VOLUME /var/www/html/themes
 # VOLUME /var/www/html/override
 
-COPY config_files/docker_run.sh /tmp/
+COPY configfiles/docker_run.sh /tmp/
 ENTRYPOINT ["/tmp/docker_run.sh"]
