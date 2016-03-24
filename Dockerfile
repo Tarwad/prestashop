@@ -104,9 +104,7 @@ RUN unzip -q /tmp/prestashop.zip -d /tmp/ && mv /tmp/prestashop/* /usr/share/ngi
 # PHP configuration
 # COPY config_files/php.ini /usr/local/etc/php/
 
-# MySQL configuration
-# RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
-# EXPOSE 3306
+ADD ./configfiles/yoursite.com.conf /usr/local/conf.d/$PS_DOMAIN.conf
 
 # VOLUME /var/www/html/modules
 # VOLUME /var/www/html/themes
