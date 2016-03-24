@@ -95,14 +95,14 @@ COPY /configfiles/pure-ftpd-common /etc/default/
 ADD https://github.com/PrestaShop/PrestaShop/releases/download/1.6.1.4/prestashop_1.6.1.4.zip /tmp/prestashop.zip
 RUN mkdir /usr/share/nginx/html/prestashop
 RUN unzip -q /tmp/prestashop.zip -d /tmp/ && mv /tmp/prestashop/* /usr/share/nginx/html/prestashop && rm /tmp/prestashop.zip
-#COPY config_files/docker_updt_ps_domains.php /var/www/html/
+COPY configfiles/docker_updt_ps_domains.php /var/www/html/
 
 # Apache configuration
 # RUN a2enmod rewrite
 # RUN chown www-data:www-data -R /var/www/html/
 
 # PHP configuration
-# COPY config_files/php.ini /usr/local/etc/php/
+COPY ./configfiles/php.ini /usr/local/etc/php/
 
 ADD ./configfiles/yoursite.com.conf /usr/local/conf.d/$PS_DOMAIN.conf
 
@@ -110,5 +110,5 @@ ADD ./configfiles/yoursite.com.conf /usr/local/conf.d/$PS_DOMAIN.conf
 # VOLUME /var/www/html/themes
 # VOLUME /var/www/html/override
 
-# COPY config_files/docker_run.sh /tmp/
-# ENTRYPOINT ["/tmp/docker_run.sh"]
+COPY config_files/docker_run.sh /tmp/
+ENTRYPOINT ["/tmp/docker_run.sh"]
