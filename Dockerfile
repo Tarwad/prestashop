@@ -106,7 +106,7 @@ COPY ./configfiles/php.ini /usr/local/etc/php/
 
 #ADD ./configfiles/yoursite.com.conf /usr/local/conf.d/$PS_DOMAIN.conf
 ADD ./configfiles/yoursite.com.conf /etc/nginx/conf.d/$PS_DOMAIN.conf
-RUN sed -i 's/PS_DOMAIN/$PS_DOMAIN/g' /etc/nginx/conf.d/$PS_DOMAIN.conf
+RUN sed -i "s/PS_DOMAIN/${PS_DOMAIN}/g" /etc/nginx/conf.d/$PS_DOMAIN.conf
 
 # VOLUME /var/www/html/modules
 # VOLUME /var/www/html/themes
