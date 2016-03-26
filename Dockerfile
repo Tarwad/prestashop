@@ -114,4 +114,4 @@ RUN sed -i "s/PS_DOMAIN/${PS_DOMAIN}/g" /etc/nginx/conf.d/$PS_DOMAIN.conf
 
 CMD ["nginx", "-g", "daemon off;"]
 COPY ./configfiles/docker_run.sh /tmp/
-#ENTRYPOINT ["/tmp/docker_run.sh"]
+ENTRYPOINT ["/tmp/docker_run.sh"]
