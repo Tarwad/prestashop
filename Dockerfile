@@ -99,12 +99,13 @@ COPY ./configfiles/docker_updt_ps_domains.php /var/www/$PS_DOMAIN
 
 # Apache configuration
 # RUN a2enmod rewrite
-# RUN chown www-data:www-data -R /var/www/html/
+RUN chown nginx:nginx -R /var/www/$PS_DOMAIN
 
 # PHP configuration
 COPY ./configfiles/php.ini /usr/local/etc/php/
 
-ADD ./configfiles/yoursite.com.conf /usr/local/conf.d/$PS_DOMAIN.conf
+#ADD ./configfiles/yoursite.com.conf /usr/local/conf.d/$PS_DOMAIN.conf
+ADD ./configfiles/yoursite.com.conf /etc/nginx/conf.d/$PS_DOMAIN.conf
 
 # VOLUME /var/www/html/modules
 # VOLUME /var/www/html/themes
