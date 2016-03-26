@@ -111,4 +111,4 @@ ADD ./configfiles/yoursite.com.conf /usr/local/conf.d/$PS_DOMAIN.conf
 # VOLUME /var/www/html/override
 
 COPY ./configfiles/docker_run.sh /tmp/
-ENTRYPOINT ["/tmp/docker_run.sh"]
+#ENTRYPOINT ["/tmp/docker_run.sh"]
