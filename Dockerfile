@@ -54,7 +54,7 @@ RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC64107
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log
 
-EXPOSE 80 443
+EXPOSE 22 80 443
 
 CMD ["nginx", "-g", "daemon off;"]
 
@@ -93,7 +93,7 @@ COPY ./configfiles/pure-ftpd-common /etc/default/
 
 # Get PrestaShop
 ADD https://github.com/PrestaShop/PrestaShop/releases/download/1.6.1.4/prestashop_1.6.1.4.zip /tmp/prestashop.zip
-RUN mkdir /usr/share/nginx/html/prestashop
+RUN mkdir -p /var/www/$PS_DOMAIN
 RUN unzip -q /tmp/prestashop.zip -d /tmp/ && mv /tmp/prestashop/* /var/www/$PS_DOMAIN && rm /tmp/prestashop.zip
 COPY ./configfiles/docker_updt_ps_domains.php /var/www/$PS_DOMAIN
 
