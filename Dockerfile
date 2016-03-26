@@ -56,7 +56,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 
 EXPOSE 22 80 443
 
-CMD ["nginx", "-g", "daemon off;"]
+
 
 # install hTOP - PHP fpm
 RUN apt-get update && apt-get upgrade -y && apt-get install zip unzip htop software-properties-common python-software-properties -y
@@ -112,5 +112,6 @@ RUN sed -i 's/PS_DOMAIN/$PS_DOMAIN/g' /etc/nginx/conf.d/$PS_DOMAIN.conf
 # VOLUME /var/www/html/themes
 # VOLUME /var/www/html/override
 
+CMD ["nginx", "-g", "daemon off;"]
 COPY ./configfiles/docker_run.sh /tmp/
 #ENTRYPOINT ["/tmp/docker_run.sh"]
